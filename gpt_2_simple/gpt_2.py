@@ -146,7 +146,8 @@ def finetune(sess,
              only_train_transformer_layers=False,
              optimizer='adam',
              overwrite=False,
-             reuse=False):
+             reuse=False,
+             batch_sample_size=1024):
     """Finetunes the model on the given dataset.
 
     Adapted from https://github.com/nshepperd/gpt-2/blob/finetuning/train.py.
@@ -310,7 +311,7 @@ def finetune(sess,
             fp.write('\n'.join(all_text))
 
     def sample_batch():
-        return [data_sampler.sample(1024) for _ in range(batch_size)]
+        return [data_sampler.sample(batch_sample_size) for _ in range(batch_size)]
 
     if overwrite and restore_from == 'latest':
         for file in files:
